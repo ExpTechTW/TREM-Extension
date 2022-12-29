@@ -6,6 +6,11 @@ let alert_show_window = false;
 let audio_note = 0;
 let audio_eew = false;
 
+let audio_note_times = 0;
+
+const myAudio_note = new Audio(chrome.runtime.getURL("./resource/audios/note.mp3"));
+const myAudio_eew = new Audio(chrome.runtime.getURL("./resource/audios/warn.mp3"));
+
 chrome.browserAction.onClicked.addListener((tab) => ShowWindow());
 
 main();
@@ -20,17 +25,23 @@ function main() {
 		if (controller.signal.aborted || ans == undefined) req_lock = false;
 		else {
 			ans = await ans.json();
+			ans.alert = true;
 			if (ans.alert) {
 				if (!alert_show_window) {
 					alert_show_window = true;
 					ShowWindow();
 				}
 				if (ans.eew == "" && Date.now() - audio_note > 1500) {
-					audio_note = Date.now();
-					const myAudio = new Audio(chrome.runtime.getURL("./resource/audios/note.mp3"));
-					myAudio.play();
+					audio_note_times++;
+					if (audio_note_times <= 5) {
+						audio_note = Date.now();
+						myAudio_note.play();
+					}
 				}
-			} else alert_show_window = false;
+			} else {
+				alert_show_window = false;
+				audio_note_times = 0;
+			}
 			if (ans.eew != "") {
 				if (!alert_show_window) {
 					alert_show_window = true;
@@ -38,8 +49,7 @@ function main() {
 				}
 				if (!audio_eew) {
 					audio_eew = true;
-					const myAudio = new Audio(chrome.runtime.getURL("./resource/audios/warn.mp3"));
-					myAudio.play();
+					myAudio_eew.play();
 				}
 			} else audio_eew = false;
 			req_lock = false;
