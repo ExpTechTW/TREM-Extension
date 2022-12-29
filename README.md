@@ -1,25 +1,53 @@
-# 模板
-<img alt="Discord" src="https://img.shields.io/discord/926545182407688273">
+<img alt="Logo" src="https://upload.cc/i1/2022/08/11/DOqzZM.png" width="128px" height="128px" align="left"/>
 
-------
 
-- 這是一個 ExpTech Github 模板
+# Taiwan Real-time Earthquake Monitoring Extension
+臺灣即時地震監測 瀏覽器插件
+<a href="https://github.com/ExpTechTW/TREM/actions/workflows/github_actions.yml"><img alt="GitHub Workflow Status" align="right" src="https://github.com/ExpTechTW/TREM/actions/workflows/github_actions.yml/badge.svg"></a>
+<a href="https://discord.gg/5dbHqV8ees"><img alt="TREM Discord" align="right" src="https://img.shields.io/discord/926545182407688273?color=%237289DA&logo=discord&logoColor=white"></a>\
+&nbsp;
 
-## 索引
-- [貢獻者](#貢獻者)
-- [發佈規則](#發佈規則)
-- [合作](#合作)
+## 關於 TREM Extension
+
+TREM Extension 是一款開源地震速報瀏覽器插件，提供給您即時的地震資訊，在地震發生的第一時間取得各管道發布的強震即時警報訊息
+ 
+## 功能
+* 即時地震資訊
+* 查看地震報告
+* 地震預警
+
+## 安裝
+```
+若沒有開啟開發人員模式 會找不到載入解壓縮選項
+```
+![IMG_20221229_204224](https://user-images.githubusercontent.com/44525760/209952965-e13ee45d-324b-44e4-b8ea-5ed08ea12a72.png)
+![IMG_20221229_204453](https://user-images.githubusercontent.com/44525760/209952971-1fb5f7ed-7f6a-4473-b599-a05267a3ed68.png)
+
+## 強震即時警報來源
+* [交通部中央氣象局](https://www.cwb.gov.tw/)
+* [P波警報器強震網](https://palert.earth.sinica.edu.tw/)
+* [中国福建省地震局](http://www.fjdzj.gov.cn)
+* [日本気象庁](https://www.jma.go.jp/)
+* [防災科研](https://www.bosai.go.jp/)
+
+## 注意事項
+1. 使用過程中，請務必謹慎閱讀提示和注意事項
+2. 使用過程中可能遇到無法理解的錯誤，但大部份不影響系統運作，如遇到錯誤請向開發人員回報
+3. 即時測站資訊僅供參考，實際請以中央氣象局為主
+4. 此軟體僅供研究、學術及教育用途（不得營利），若使用則需接受相關風險
+5. 任何不被官方所認可的行為均有可能被列入伺服器黑名單中，請務必遵守相關規範
+6. 此程式為免費開源程式，不保證能永久營運
+7. 最後，如果覺得程式不錯，請分享給其他人，這是讓作者維護下去的動力
+8. 我們不斷對程式進行更新及優化，我們一直和使用者站在一起，為使用者的體驗而不斷努力
+9. 本程式內資源均由網際網路收集而來， 當權利人發現在本程式所提供的內容侵犯其著作權時，**請聯繫我們並請權利人提供相關文件連結**， 本站將依法採取措施移除相關內容或斷開相關鏈接
 
 ## 貢獻者
-- whes1015 `文檔`
+- whes1015 `程式開發` `文檔`
 
-------
+## 如何貢獻
+點擊 [Repo](https://github.com/ExpTechTW/TREM-Pocket) 主頁右上角的 Code 按鈕後點擊 Download ZIP 來下載原始碼壓縮檔\
+或是使用 `git clone` 指令來複製一份原始碼到你的電腦上\
+修改變更後開啟 [Pull Request](https://github.com/ExpTechTW/TREM-Pocket/pulls) 來把你的變更合併到我們下一次的更新裡面 :D
 
-## 發佈規則
-- 如果新版本中有錯誤，且尚未列出，請將錯誤資訊提交到 ```issue```
-- 如果您使用任何形式的辱罵性或貶義性語言給其他用戶，您將永遠被封禁！
-- 不要發送重複無意義內容至 ```issue```，否則您將永遠被封禁！
-- 若有任何問題或建議，歡迎提出
-
-## 合作
-- 若有任何可以改進的地方，歡迎使用 ```Pull requests``` 來提交
+## 開源許可證
+開源許可證資訊請詳見 [LICENSE](LICENSE) 檔案
