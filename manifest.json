@@ -12,5 +12,8 @@
             "./core/background.js"
         ],
         "persistent": true
-    }
+    },
+    "permissions": [
+        "notifications"
+    ]
 }

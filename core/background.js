@@ -25,13 +25,20 @@ function main() {
 		if (controller.signal.aborted || ans == undefined) req_lock = false;
 		else {
 			ans = await ans.json();
-			ans.alert = true;
 			if (ans.alert) {
 				if (!alert_show_window) {
 					alert_show_window = true;
 					ShowWindow();
 				}
 				if (ans.eew == "" && Date.now() - audio_note > 1500) {
+					if (audio_note_times == 0)
+						chrome.notifications.create("note", {
+							type     : "basic",
+							iconUrl  : "./resource/images/ic_launcher.png",
+							title    : "地震檢知",
+							message  : "偵測到較大晃動，注意安全，並留意 中央氣象局 是否發布 強震即時警報",
+							priority : 2,
+						});
 					audio_note_times++;
 					if (audio_note_times <= 5) {
 						audio_note = Date.now();
@@ -50,6 +57,15 @@ function main() {
 				if (!audio_eew) {
 					audio_eew = true;
 					myAudio_eew.play();
+					chrome.notifications.create("eew", {
+						type     : "basic",
+						iconUrl  : "./resource/images/ic_launcher.png",
+						title    : "強震即時警報",
+						message  : "慎防強烈搖晃\n[臨震應變 趴下、掩護、穩住]",
+						priority : 2,
+					}, () => {
+						console.log(1);
+					});
 				}
 			} else audio_eew = false;
 			req_lock = false;
