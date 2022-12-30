@@ -8,10 +8,11 @@ let audio_eew = false;
 
 let audio_note_times = 0;
 
-const myAudio_note = new Audio(chrome.runtime.getURL("./resource/audios/note.mp3"));
-const myAudio_eew = new Audio(chrome.runtime.getURL("./resource/audios/warn.mp3"));
+const _url = chrome.runtime.getURL("");
+const myAudio_note = new Audio("https://github.com/ExpTechTW/TREM-Extension/blob/Release/resource/audios/note.mp3?raw=true");
+const myAudio_eew = new Audio("https://github.com/ExpTechTW/TREM-Extension/blob/Release/resource/audios/warn.mp3?raw=true");
 
-chrome.browserAction.onClicked.addListener((tab) => ShowWindow());
+chrome.action.onClicked.addListener((tab) => ShowWindow());
 
 main();
 function main() {
