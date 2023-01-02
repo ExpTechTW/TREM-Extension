@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "TREM",
     "description": "Taiwan Real-time Earthquake Monitoring ( 臺灣即時地震監測 )",
-    "version": "1.1.0",
+    "version": "2.0.0",
     "action": {
         "default_icon": "./resource/images/ic_launcher.png",
         "default_title": "Taiwan Real-time Earthquake Monitoring ( 臺灣即時地震監測 )"
@@ -12,14 +12,5 @@
     },
     "permissions": [
         "notifications"
-    ],
-    "web_accessible_resources": [
-        {
-            "resources": [
-                "./resource/audios/note.mp3",
-                "./resource/audios/warn.mp3"
-            ],
-            "matches": []
-        }
     ]
 }

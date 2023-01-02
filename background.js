@@ -8,10 +8,6 @@ let audio_eew = false;
 
 let audio_note_times = 0;
 
-const _url = chrome.runtime.getURL("");
-const myAudio_note = new Audio("https://github.com/ExpTechTW/TREM-Extension/blob/Release/resource/audios/note.mp3?raw=true");
-const myAudio_eew = new Audio("https://github.com/ExpTechTW/TREM-Extension/blob/Release/resource/audios/warn.mp3?raw=true");
-
 chrome.action.onClicked.addListener((tab) => ShowWindow());
 
 main();
@@ -29,7 +25,7 @@ function main() {
 			if (ans.alert) {
 				if (!alert_show_window) {
 					alert_show_window = true;
-					ShowWindow();
+					await ShowWindow();
 				}
 				if (ans.eew == "" && Date.now() - audio_note > 1500) {
 					if (audio_note_times == 0)
@@ -43,7 +39,7 @@ function main() {
 					audio_note_times++;
 					if (audio_note_times <= 5) {
 						audio_note = Date.now();
-						myAudio_note.play();
+						chrome.runtime.sendMessage({ play: "note" });
 					}
 				}
 			} else {
@@ -53,11 +49,11 @@ function main() {
 			if (ans.eew != "") {
 				if (!alert_show_window) {
 					alert_show_window = true;
-					ShowWindow();
+					await ShowWindow();
 				}
 				if (!audio_eew) {
 					audio_eew = true;
-					myAudio_eew.play();
+					chrome.runtime.sendMessage({ play: "warn" });
 					chrome.notifications.create("eew", {
 						type     : "basic",
 						iconUrl  : "./resource/images/ic_launcher.png",
@@ -75,15 +71,19 @@ function main() {
 }
 
 async function ShowWindow() {
-	if (!await IsWindowOpen(_window))
-		chrome.windows.create({
-			url    : chrome.runtime.getURL("../index.html"),
-			type   : "popup",
-			height : 410,
-			width  : 440,
-		}, (win) => _window = win.id);
-	else
-		chrome.windows.get(_window, (w) => chrome.windows.update(w.id, { focused: true }));
+	// eslint-disable-next-line no-async-promise-executor
+	return await new Promise(async (c) => {
+		if (!await IsWindowOpen(_window))
+			await chrome.windows.create({
+				url    : chrome.runtime.getURL("../index.html"),
+				type   : "popup",
+				height : 410,
+				width  : 440,
+			}, (win) => _window = win.id);
+		else
+			await chrome.windows.get(_window, (w) => chrome.windows.update(w.id, { focused: true }));
+		setTimeout(() => c(), 1000);
+	});
 }
 
 async function IsWindowOpen(ID) {
