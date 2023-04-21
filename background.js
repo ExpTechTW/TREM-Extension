@@ -10,6 +10,9 @@ let audio_note_times = 0;
 
 chrome.action.onClicked.addListener((tab) => ShowWindow());
 
+let _alert=false
+setTimeout(()=>_alert=true,5000)
+
 main();
 function main() {
 	setInterval(async () => {
@@ -22,6 +25,7 @@ function main() {
 		if (controller.signal.aborted || ans == undefined) req_lock = false;
 		else {
 			ans = await ans.json();
+			if(_alert) ans.alert=true
 			if (ans.alert) {
 				if (!alert_show_window) {
 					alert_show_window = true;
@@ -37,10 +41,10 @@ function main() {
 							priority : 2,
 						});
 					audio_note_times++;
-					if (audio_note_times <= 5) {
+					// if (audio_note_times <= 5) {
 						audio_note = Date.now();
-						chrome.runtime.sendMessage({ play: "note" });
-					}
+						chrome.runtime.sendMessage({ play: "warn" });
+					// }
 				}
 			} else {
 				alert_show_window = false;
@@ -53,7 +57,7 @@ function main() {
 				}
 				if (!audio_eew) {
 					audio_eew = true;
-					chrome.runtime.sendMessage({ play: "warn" });
+					chrome.runtime.sendMessage({ play: "alert" });
 					chrome.notifications.create("eew", {
 						type     : "basic",
 						iconUrl  : "./resource/images/ic_launcher.png",
