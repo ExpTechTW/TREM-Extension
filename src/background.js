@@ -9,26 +9,17 @@ let audio_eew = false;
 
 let audio_note_times = 0;
 let max_i = -1;
+let port;
 
 chrome.action.onClicked.addListener(() => ShowWindow());
 
-async function createOffscreen() {
-	if (await chrome.offscreen.hasDocument?.()) return;
-	await chrome.offscreen.createDocument({
-		url           : "offscreen.html",
-		reasons       : ["BLOBS"],
-		justification : "keep service worker running",
-	});
+function connect() {
+	port = chrome.runtime.connect({ name: "foo" });
+	port.onDisconnect.addListener(connect);
 }
-chrome.runtime.onStartup.addListener(() => {
-	createOffscreen();
-});
-
-chrome.runtime.onMessage.addListener(msg => {
-	if (msg.keepAlive) void 0;
-});
-
+connect();
 main();
+
 function main() {
 	setInterval(async () => {
 		if (req_lock) return;
