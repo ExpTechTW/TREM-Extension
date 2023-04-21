@@ -1,3 +1,4 @@
+/* eslint-disable no-async-promise-executor */
 /* eslint-disable no-undef */
 let _window = null;
 let req_lock = false;
@@ -8,10 +9,10 @@ let audio_eew = false;
 
 let audio_note_times = 0;
 
-chrome.action.onClicked.addListener((tab) => ShowWindow());
+chrome.action.onClicked.addListener(() => ShowWindow());
 
-let _alert=false
-setTimeout(()=>_alert=true,5000)
+let _alert = false;
+setTimeout(() => _alert = true, 5000);
 
 main();
 function main() {
@@ -25,7 +26,7 @@ function main() {
 		if (controller.signal.aborted || ans == undefined) req_lock = false;
 		else {
 			ans = await ans.json();
-			if(_alert) ans.alert=true
+			if (_alert) ans.alert = true;
 			if (ans.alert) {
 				if (!alert_show_window) {
 					alert_show_window = true;
@@ -42,8 +43,8 @@ function main() {
 						});
 					audio_note_times++;
 					// if (audio_note_times <= 5) {
-						audio_note = Date.now();
-						chrome.runtime.sendMessage({ play: "warn" });
+					audio_note = Date.now();
+					if (await IsWindowOpen(_window)) chrome.runtime.sendMessage({ play: "warn" });
 					// }
 				}
 			} else {
@@ -57,7 +58,7 @@ function main() {
 				}
 				if (!audio_eew) {
 					audio_eew = true;
-					chrome.runtime.sendMessage({ play: "alert" });
+					if (await IsWindowOpen(_window)) chrome.runtime.sendMessage({ play: "alert" });
 					chrome.notifications.create("eew", {
 						type     : "basic",
 						iconUrl  : "./resource/images/ic_launcher.png",
@@ -75,7 +76,6 @@ function main() {
 }
 
 async function ShowWindow() {
-	// eslint-disable-next-line no-async-promise-executor
 	return await new Promise(async (c) => {
 		if (!await IsWindowOpen(_window))
 			await chrome.windows.create({
@@ -86,7 +86,7 @@ async function ShowWindow() {
 			}, (win) => _window = win.id);
 		else
 			await chrome.windows.get(_window, (w) => chrome.windows.update(w.id, { focused: true }));
-		setTimeout(() => c(), 1000);
+		c();
 	});
 }
 
