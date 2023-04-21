@@ -8,6 +8,7 @@ let audio_note = 0;
 let audio_eew = false;
 
 let audio_note_times = 0;
+let max_i = -1;
 
 chrome.action.onClicked.addListener(() => ShowWindow());
 
@@ -28,6 +29,10 @@ function main() {
 			ans = await ans.json();
 			if (_alert) ans.alert = true;
 			if (ans.alert) {
+				if (max_i < ans.max_intensity) {
+					max_i = ans.max_intensity;
+					alert_show_window = false;
+				}
 				if (!alert_show_window) {
 					alert_show_window = true;
 					await ShowWindow();
@@ -42,14 +47,13 @@ function main() {
 							priority : 2,
 						});
 					audio_note_times++;
-					// if (audio_note_times <= 5) {
 					audio_note = Date.now();
 					if (await IsWindowOpen(_window)) chrome.runtime.sendMessage({ play: "warn" });
-					// }
 				}
 			} else {
 				alert_show_window = false;
 				audio_note_times = 0;
+				max_i = -1;
 			}
 			if (ans.eew != "") {
 				if (!alert_show_window) {
