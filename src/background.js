@@ -12,9 +12,6 @@ let max_i = -1;
 
 chrome.action.onClicked.addListener(() => ShowWindow());
 
-let _alert = false;
-setTimeout(() => _alert = true, 5000);
-
 async function createOffscreen() {
 	if (await chrome.offscreen.hasDocument?.()) return;
 	await chrome.offscreen.createDocument({
@@ -43,7 +40,6 @@ function main() {
 		if (controller.signal.aborted || ans == undefined) req_lock = false;
 		else {
 			ans = await ans.json();
-			if (_alert) ans.alert = true;
 			if (ans.alert) {
 				if (max_i < ans.max_intensity) {
 					max_i = ans.max_intensity;
