@@ -15,6 +15,26 @@ chrome.action.onClicked.addListener(() => ShowWindow());
 let _alert = false;
 setTimeout(() => _alert = true, 5000);
 
+setInterval(() => {
+	chrome.runtime.sendMessage({ keepAlive: true });
+}, 5000);
+
+async function createOffscreen() {
+	if (await chrome.offscreen.hasDocument?.()) return;
+	await chrome.offscreen.createDocument({
+		url           : "index.html",
+		reasons       : ["BLOBS"],
+		justification : "keep service worker running",
+	});
+}
+chrome.runtime.onStartup.addListener(() => {
+	createOffscreen();
+});
+
+chrome.runtime.onMessage.addListener(msg => {
+	if (msg.keepAlive) console.log("keepAlive");
+});
+
 main();
 function main() {
 	setInterval(async () => {
